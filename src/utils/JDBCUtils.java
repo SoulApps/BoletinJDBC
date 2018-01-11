@@ -1,6 +1,7 @@
 package utils;
 
 import com.mysql.jdbc.Connection;
+import com.mysql.jdbc.DatabaseMetaData;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -31,7 +32,7 @@ public class JDBCUtils {
     public Connection startConnection() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            conexion = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/horario", "root", "");
+            conexion = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/Horario", "root", "");
         } catch (SQLException | ClassNotFoundException e) {
             System.out.println("Error");
         }
@@ -60,10 +61,70 @@ public class JDBCUtils {
         }
     }
 
+    // Método que comprueba si la tabla existe
+    public boolean checkTable(String table) {
+        boolean exists = false;
+        String[] tipos = {"TABLE"};
+        DatabaseMetaData dbmd;
+        ResultSet result;
+        try {
+            dbmd = (DatabaseMetaData) conexion.getMetaData();
+            result = dbmd.getTables(null, "horario", null, tipos);
+            while (result.next())
+                if (result.getString("TABLE_NAME").equals(table))
+                    exists = true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return exists;
+    }
+
     // Método para consultar los datos de una tabla
     public void showTableData(String table) {
-        boolean exists = false;
-        ResultSet resultSet;
+        DatabaseMetaData dbmd;
+        ResultSet result = null;
+        try {
+            dbmd = (DatabaseMetaData) conexion.getMetaData();
+            if (checkTable(table)) {
+                // Información de la tabla
+                System.out.println("DATOS DE LA TABLA");
+                result = dbmd.getColumns(null, "horario", table, null);
+                while (result.next())
+                    System.out.printf("[Columna: %s] [Tipo: %s] [Tamaño: %s] [Null: %s]%n", result.getString("COLUMN_NAME"), result.getString("TYPE_NAME"), result.getString("COLUMN_SIZE"), result.getString("IS_NULLABLE"));
+
+                System.out.println();
+
+                // Claves primarias
+                System.out.println("CLAVES PRIMARIAS");
+                result = dbmd.getPrimaryKeys(null, "horario", table);
+                while (result.next())
+                    System.out.printf("Clave primaria: %s%n", result.getString("COLUMN_NAME"));
+
+
+                // Claves ajenas exportadas
+                System.out.println("\n CLAVES EXPORTADAS");
+                result = dbmd.getExportedKeys(null, "horario", table);
+                while (result.next())
+                    System.out.printf("[Clave exportada: %s] [Clave primaria: %s] [Tabla origen:%s] [Tabla destino: %s]%n",
+                            result.getString("FKCOLUMN_NAME"), result.getString("PKCOLUMN_NAME"), result.getString("PKTABLE_NAME"),
+                            result.getString("FKTABLE_NAME"));
+
+                // Claves ajenas importadas
+                System.out.println("\n CLAVES IMPORTADAS");
+                result = dbmd.getImportedKeys(null, "horario", table);
+                while (result.next())
+                    System.out.printf("[Clave exportada: %s] [Clave primaria: %s] [Tabla origen:%s] [Tabla destino: %s]%n",
+                            result.getString("FKCOLUMN_NAME"), result.getString("PKCOLUMN_NAME"), result.getString("PKTABLE_NAME"),
+                            result.getString("FKTABLE_NAME"));
+
+            } else {
+                System.out.println("No existe esa tabla");
+            }
+            // Close all
+            result.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
     }
 }
