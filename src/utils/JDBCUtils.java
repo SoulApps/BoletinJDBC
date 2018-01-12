@@ -32,7 +32,7 @@ public class JDBCUtils {
     public Connection startConnection() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            conexion = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/Horario", "root", "");
+            conexion = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/horario", "root", "");
         } catch (SQLException | ClassNotFoundException e) {
             System.out.println("Error");
         }
@@ -125,6 +125,17 @@ public class JDBCUtils {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
+    }
+    // Método para insertar datos
+    public int insertData(String sql){
+        int result = 0;
+        try {
+            Statement sentence = conexion.createStatement();
+            result = sentence.executeUpdate(sql);
+            sentence.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 }
