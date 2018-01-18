@@ -125,6 +125,7 @@ public class JDBCUtils {
         }
     }
 
+    // ------------------- [ SENTENCIAS ] -------------------
     // Método para insertar datos
     public int insertData(String sql) {
         int result = 0;
@@ -166,4 +167,12 @@ public class JDBCUtils {
         }
         return result;
     }
+
+    // Método para actualizar una tabla 
+    public int updateTable(String sql){
+        int result = 0;
+
+        return result;
+    }
+    // ------------------- [ SENTENCIAS ] -------------------
 }
