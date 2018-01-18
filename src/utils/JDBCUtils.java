@@ -6,10 +6,8 @@ import com.mysql.jdbc.DatabaseMetaData;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.util.ArrayList;
 
 public class JDBCUtils {
     private static JDBCUtils instancia = null;
@@ -126,12 +124,42 @@ public class JDBCUtils {
             e.printStackTrace();
         }
     }
+
     // Método para insertar datos
-    public int insertData(String sql){
+    public int insertData(String sql) {
         int result = 0;
         try {
             Statement sentence = conexion.createStatement();
             result = sentence.executeUpdate(sql);
+            sentence.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    // Método para insertar sentencias preparadas
+    public int insertPreparedStatement(String sql, String table, ArrayList<Object> datos) {
+        int result = 0;
+        try {
+            PreparedStatement sentence = conexion.prepareStatement(sql);
+            switch (table){
+                // Recogemos los datos en función de la tabla a la que queramos insertar
+                case "curso":
+                    sentence.setString(1, (String) datos.get(0));
+                    sentence.setString(2, (String) datos.get(1));
+                    sentence.setString(3, (String) datos.get(2));
+                    break;
+                case "asignatura":
+                    sentence.setString(1, (String) datos.get(0));
+                    sentence.setString(2, (String) datos.get(1));
+                    sentence.setInt(3, (int) datos.get(2));
+                    sentence.setInt(4, (int) datos.get(3));
+                    break;
+            }
+            // Insertamos los datos en la tabla
+            sentence.executeUpdate();
+            // Cerramos la sentencia
             sentence.close();
         } catch (SQLException e) {
             e.printStackTrace();
