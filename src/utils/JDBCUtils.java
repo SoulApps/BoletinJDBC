@@ -168,7 +168,7 @@ public class JDBCUtils {
         return result;
     }
 
-    // Método para actualizar una tabla 
+    // Método para actualizar una tabla
     public int updateTable(String sql){
         int result = 0;
 
