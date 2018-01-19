@@ -157,9 +157,15 @@ public class JDBCUtils {
                     sentence.setInt(3, (int) datos.get(2));
                     sentence.setInt(4, (int) datos.get(3));
                     break;
+                case "reparto":
+                    sentence.setString(1, (String) datos.get(0));
+                    sentence.setString(2, (String) datos.get(1));
+                    sentence.setString(3, (String) datos.get(2));
+                    sentence.setString(4, (String) datos.get(3));
             }
             // Insertamos los datos en la tabla
-            sentence.executeUpdate();
+            result = sentence.executeUpdate();
+            System.out.println(result);
             // Cerramos la sentencia
             sentence.close();
         } catch (SQLException e) {
