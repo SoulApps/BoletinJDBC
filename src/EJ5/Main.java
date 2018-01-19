@@ -8,6 +8,7 @@ public class Main {
         un 10% de aquellas asignaturas de la FP Básica que empiecen por M.
          */
         JDBCUtils utils = JDBCUtils.getInstance();
-
+        String sql  = "SELECT * from "
+        // Obtenemos la sentencia
     }
 }
