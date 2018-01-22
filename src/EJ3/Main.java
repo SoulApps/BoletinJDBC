@@ -2,8 +2,6 @@ package EJ3;
 
 import utils.JDBCUtils;
 
-import java.util.Date;
-
 public class Main {
     public static void main(String[] args) {
         /*
@@ -23,11 +21,11 @@ public class Main {
                 "incluyendo 240 horas de Formación en centros de trabajo (FCT) en empresas del Sector";
         String tipo = "FPB";
         String fecha = "2018/09/01";
-        String sql = String.format("INSERT INTO ofertaeducativa VALUES ('%s', '%s', '%s', '%s','%s')",cod_OE,nombre,descripcion,tipo,fecha);
+        String sql = String.format("INSERT INTO OfertaEducativa VALUES ('%s', '%s', '%s', '%s','%s')",cod_OE,nombre,descripcion,tipo,fecha);
 
         // Creamos la conexión
         JDBCUtils.getInstance().startConnection();
-        JDBCUtils.getInstance().insertData(sql);
+        JDBCUtils.getInstance().exeCuteSentence(sql);
         // Cerramos la conexión
         JDBCUtils.getInstance().closeConnection();
 

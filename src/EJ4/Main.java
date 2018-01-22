@@ -9,9 +9,9 @@ public class Main {
     public static void main(String[] args) {
         /*Añade el primer curso de la FP Básica con el tutor Daniel Ayala Soriano
     y las siguientes asignaturas. Utiliza sentencias preparadas. */
-        String sqlCurso = "INSERT INTO curso VALUES(?,?,?)";
-        String sqlAsignatura = "INSERT INTO asignatura VALUES(?,?,?,?)";
-        String sqlReparto = "INSERT INTO reparto VALUES(?,?,?,?)";
+        String sqlCurso = "INSERT INTO Curso VALUES(?,?,?)";
+        String sqlAsignatura = "INSERT INTO Asignatura VALUES(?,?,?,?)";
+        String sqlReparto = "INSERT INTO Reparto VALUES(?,?,?,?)";
         String codOe = "FPB", codCurso = "1A", codTutor = "DAS", codProf = "MGD",
         codAsig = "OACE", nomASignatura = "Operaciones auxiliares para la configuración y la explotación",
                 codAsig2 = "MOSC", nomASignatura2 = "Montaje y mantenimiento de sistemas y componentes informáticos";
