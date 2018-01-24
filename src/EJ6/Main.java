@@ -10,7 +10,9 @@ public class Main {
         JDBCUtils utils = JDBCUtils.getInstance();
         String sql  = "DELETE FROM OfertaEducativa WHERE codOe = 'FPB';";
         // Creamos la conexión
-        JDBCUtils.getInstance().startConnection();
-        JDBCUtils.getInstance().exeCuteSentence(sql);
+        utils.startConnection();
+        utils.exeCuteSentence(sql);
+        utils.closeConnection();
+
     }
 }

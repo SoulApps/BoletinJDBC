@@ -12,7 +12,8 @@ public class Main {
                       "SET a.horasTotales = a.horasTotales * 1.1, a.horasSemanales = a.horasSemanales * 1.1\n" +
                       "WHERE r.codOe = 'FPB' AND a.nombre LIKE 'M%';";
         // Creamos la conexión
-        JDBCUtils.getInstance().startConnection();
-        JDBCUtils.getInstance().exeCuteSentence(sql);
+        utils.startConnection();
+        utils.exeCuteSentence(sql);
+        utils.closeConnection();
     }
 }

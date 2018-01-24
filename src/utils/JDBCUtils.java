@@ -2,6 +2,8 @@ package utils;
 
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.DatabaseMetaData;
+import com.mysql.jdbc.ResultSetImpl;
+import com.sun.java.browser.plugin2.liveconnect.v1.Result;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -144,7 +146,7 @@ public class JDBCUtils {
         int result = 0;
         try {
             PreparedStatement sentence = conexion.prepareStatement(sql);
-            switch (table){
+            switch (table) {
                 // Recogemos los datos en función de la tabla a la que queramos insertar
                 case "curso":
                     sentence.setString(1, (String) datos.get(0));
@@ -175,10 +177,42 @@ public class JDBCUtils {
     }
 
     // Método para actualizar una tabla
-    public int updateTable(String sql){
+    public int updateTable(String sql) {
         int result = 0;
 
         return result;
+    }
+
+    public ResultSet executeSelect(String sql) {
+        Statement sentence;
+        ResultSet result = null;
+        try {
+            sentence = conexion.createStatement();
+            result = sentence.executeQuery(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            return result;
+        }
+    }
+
+    public void printDataFromProfesor(ResultSet rs) {
+        String tableName = "Profesor", result = "";
+        try {
+            //if (rs.getFetchSize() == 0) {
+                //ErrorUtils.showErrorNoResultInSQL(tableName);
+            //} else {
+                while (rs.next()){
+
+                }
+                // una vez nos hemos salido, imprimimos
+                System.out.print(result);
+                rs.close();
+           // }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
     // ------------------- [ SENTENCIAS ] -------------------
 }
