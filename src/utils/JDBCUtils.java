@@ -3,7 +3,6 @@ package utils;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.DatabaseMetaData;
 import com.mysql.jdbc.ResultSetImpl;
-import com.sun.java.browser.plugin2.liveconnect.v1.Result;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
