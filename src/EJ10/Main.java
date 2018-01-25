@@ -12,10 +12,10 @@ public class Main {
 
         ResultSet result;
         JDBCUtils utils = JDBCUtils.getInstance();
-        String sqlProfesores = "SELECT oe.nombre, c.codOe, p.Nombre, p.Apellidos\n" +
-                "FROM OfertaEducativa oe\n" +
-                "RIGHT JOIN Curso c ON oe.codOe = c.codOe\n" +
-                "LEFT JOIN Profesor p ON c.codTutor = p.codProf;";
+        String sqlProfesores = "SELECT oe.nombre, c.codOe, p.Nombre, p.Apellidos \n" +
+                                "FROM OfertaEducativa oe\n" +
+                                "JOIN Curso c ON oe.codOe = c.codOe\n" +
+                                "JOIN Profesor p ON c.codTutor = p.codProf;";
         String cabecera = "------------------------------------------------------------------";
         utils.startConnection();
         try {

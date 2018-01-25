@@ -9,12 +9,14 @@ public class Main {
     public static void main(String[] args) {
         /*Mostrar cuándo se imparte una asignatura en un curso concreto. */
         ResultSet result;
+        String oferta ="DAM", codAsig = "SGE";
         JDBCUtils utils = JDBCUtils.getInstance();
-        String sqlProfesores = "SELECT h.codOe, h.codCurso, a.nombre, th.dia, th.horaInicio, " +
-                "th.horaFin FROM Horario h  RIGHT JOIN Asignatura a ON a.codAsig = h.codAsig " +
-                "RIGHT JOIN TramoHorario th ON h.codTramo = th.codTramo WHERE a.codAsig = 'SGE' " +
-                "AND h.codOe = 'DAM'" +
-                "ORDER BY th.dia;";
+        String sqlProfesores = String.format("SELECT h.codOe, h.codCurso, a.nombre, th.dia," +
+                "th.horaInicio,\n th.horaFin FROM Horario h  \n" +
+                "JOIN Asignatura a ON a.codAsig = h.codAsig\n" +
+                "JOIN TramoHorario th ON h.codTramo = th.codTramo WHERE a.codAsig = '%s' \n" +
+                "AND h.codOe = '%s'\n" +
+                "ORDER BY th.dia;",codAsig, oferta);
         String cabecera = "------------------------------------------------------------------";
         utils.startConnection();
         try {

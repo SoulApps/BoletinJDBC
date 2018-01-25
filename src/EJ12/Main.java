@@ -12,9 +12,9 @@ public class Main {
         int contador = 0;
         JDBCUtils utils = JDBCUtils.getInstance();
         String sqlAsignaturas = "SELECT p.nombre, p.apellidos, a.codAsig, a.nombre FROM Reparto r\n" +
-                               "LEFT JOIN Asignatura a on r.codAsig = a.codAsig\n" +
-                               "LEFT JOIN Profesor p on p.codProf = r.codProf\n" +
-                               "WHERE r.codProf = 'CJC';";
+                                "JOIN Asignatura a on r.codAsig = a.codAsig\n" +
+                                "JOIN Profesor p on p.codProf = r.codProf\n" +
+                                "WHERE r.codProf = 'CJC';";
         String cabecera = "------------------------------------------------------------------";
         utils.startConnection();
         try {
