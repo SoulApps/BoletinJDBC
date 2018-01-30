@@ -31,6 +31,7 @@ public class Main {
                 }
                 contador++;
             }
+            result.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }

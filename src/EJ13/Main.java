@@ -31,18 +31,25 @@ public class Main {
                 }
                 if (contador < 5) {
                     if (result.getString(3).startsWith("@")) {
-                        result.next();
-                        System.out.printf("%13s", result.getString(3).concat("*"));
                         contador++;
+                        entra = true;
                     } else {
-                        System.out.printf("%13s", result.getString(3));
-                        contador++;
+                        if(entra){
+                            System.out.printf("%13s", result.getString(3).concat("*"));
+                            entra = false;
+                            contador ++;
+                        }else{
+                            System.out.printf("%13s", result.getString(3));
+                            contador++;
+                        }
                     }
+
                 } else {
                     System.out.println();
                     contador = 0;
                 }
             }
+            result.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }

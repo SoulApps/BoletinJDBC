@@ -26,6 +26,7 @@ public class Main {
                         result.getString(1), result.getString(2),
                         result.getString(3), result.getString(4));
             }
+            result.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
