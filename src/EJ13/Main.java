@@ -11,43 +11,46 @@ public class Main {
             horarios donde haya desdoble.*/
         //TODO mirar esto
         ResultSet result;
-        boolean entra = false;
+        boolean primeraVez = true;
         int contador = 0;
-        String codOe = "DAM";
+        String codOe = "SMR";
         String codCurso = "1A";
         JDBCUtils utils = JDBCUtils.getInstance();
         String sqlHorario = String.format("SELECT th.horaInicio, th.horaFin, h.codAsig, h.codTramo, th.dia\n" +
                 "FROM Horario h JOIN TramoHorario th on h.codTramo = th.codTramo\n" +
                 "WHERE h.codCurso = '%s' AND h.codOe = '%s'\n" +
-                "ORDER BY th.horaInicio, th.dia, h.codAsig DESC;", codCurso, codOe);
+                "ORDER BY th.horaInicio, th.dia, h.codAsig ASC;", codCurso, codOe);
         utils.startConnection();
         try {
             result = utils.executeSelect(sqlHorario);
             System.out.printf("%-20s %11s  %11s  %11s  %11s  %11s%n",
                     "Horas", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes");
             while (result.next()) {
-                if (contador == 0) {
+                if (primeraVez) {
                     System.out.printf("%s / %s", result.getString(1), result.getString(2), " ");
+                    primeraVez = false;
                 }
                 if (contador < 5) {
                     if (result.getString(3).startsWith("@")) {
-                        //result.next();
-                        contador++;
-                        entra = true;
+                        result.next();
+                        System.out.printf("%13s", result.getString(3).concat("*"));
                     } else {
-                        if(entra){
-                            System.out.printf("%13s", result.getString(3).concat("*"));
-                            entra = false;
-                            contador ++;
-                        }else{
-                            System.out.printf("%13s", result.getString(3));
-                            contador++;
-                        }
+                        System.out.printf("%13s", result.getString(3));
                     }
-
-                } else {
+                    contador++;
+                // En el caso que el contador sea 5, lo que hacemos es poner el contador a 0, haciendo un salto de línea
+                // mostramos el siguiente tramo horario y volvemos a preguntar si el resultado actual es o no un desdoble.
+                } else if (contador == 5) {
                     System.out.println();
                     contador = 0;
+                    System.out.printf("%s / %s", result.getString(1), result.getString(2), " ");
+                    if (result.getString(3).startsWith("@")) {
+                        result.next();
+                        System.out.printf("%13s", result.getString(3).concat("*"));
+                    } else {
+                        System.out.printf("%13s", result.getString(3));
+                    }
+                    contador++;
                 }
             }
             result.close();
