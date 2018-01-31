@@ -31,6 +31,7 @@ public class Main {
                 }
                 if (contador < 5) {
                     if (result.getString(3).startsWith("@")) {
+                        //result.next();
                         contador++;
                         entra = true;
                     } else {

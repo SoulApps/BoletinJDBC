@@ -12,7 +12,7 @@ distintos donde se imparte, el número de ofertas educativas distintas donde se 
 aquellas asignaturas que tengan 3 o más horas a la semana. */
         ResultSet result;
         JDBCUtils utils = JDBCUtils.getInstance();
-        String sqlProfesores = "SELECT a.nombre, a.horasSemanales,COUNT(*),COUNT(DISTINCT r.codOE)\n" +
+        String sqlProfesores = "SELECT a.nombre, a.horasSemanales,COUNT(DISTINCT r.codCurso,r.codOE),COUNT(DISTINCT r.codOE)\n" +
                 "FROM Asignatura a\n" +
                 "JOIN Reparto r ON a.codAsig = r.codAsig\n" +
                 "WHERE a.horasSemanales >= 3\n" +
